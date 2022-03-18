@@ -38,6 +38,7 @@ const nextISSTimesForMyLocation = function(callback) {
 };
 
 // PRINT OUT FLY OVER TIMES
+
 const printPassTimes = function(risetimes) {
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',};
   for (let rise of risetimes) {
@@ -45,5 +46,15 @@ const printPassTimes = function(risetimes) {
     console.log(`Next pass at ${dateTimeStr} for ${rise.duration} seconds!`);
   }
 };
+
+// LHL solution to print pass times
+// const printPassTimes = function(passTimes) {
+//   for (const pass of passTimes) {
+//     const datetime = new Date(0);
+//     datetime.setUTCSeconds(pass.risetime);
+//     const duration = pass.duration;
+//     console.log(`Next pass at ${datetime} for ${duration} seconds!`);
+//   }
+// };
 
 module.exports = { nextISSTimesForMyLocation, printPassTimes };
