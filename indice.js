@@ -1,13 +1,15 @@
-const { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes } = require('./iss-promised');
+const { nextISSTimesForMyLocation, printPassTimes } = require('./iss-promised');
 
-fetchMyIP()
-  .then(fetchCoordsByIP)
-  .then((body) => {
-    console.log(body);
-    return body;
+// fetchMyIP()
+//   .then(fetchCoordsByIP)
+//   .then(fetchISSFlyOverTimes)
+//   .then((body) => {
+//     console.log(body);
+//     return body;
+//   })
+
+nextISSTimesForMyLocation()
+  .then((passTimes) => {
+    printPassTimes(passTimes);
   })
-  .then(fetchISSFlyOverTimes)
-  .then((body) => {
-    console.log(body);
-    return body;
-  })
+  .catch((err) => console.log(`Error: ${err.message}`))
