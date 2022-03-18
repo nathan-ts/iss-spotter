@@ -1,4 +1,3 @@
-
 const request = require('request');
 
 /** fetchMyIP(callback)
@@ -56,7 +55,6 @@ const fetchCoordsByIP = function(ip, done) {
  *     [ { risetime: 134564234, duration: 600 }, ... ]
  */
 const fetchISSFlyOverTimes = function(coords, done) {
-  // console.log(coords);
   let url = `https://iss-pass.herokuapp.com/json/?lat=${coords.latitude}&lon=${coords.longitude}`;
   request(url, (err, response, body) => {
     if (err) {
@@ -82,8 +80,6 @@ const fetchISSFlyOverTimes = function(coords, done) {
  *   - The fly-over times as an array (null if error):
  *     [ { risetime: <number>, duration: <number> }, ... ]
  */ 
-
-
 const nextISSTimesForMyLocation = function(callback) {
   let risetimes = {};
 
@@ -93,7 +89,6 @@ const nextISSTimesForMyLocation = function(callback) {
       return;
     }
     let myIP = ip;
-    // console.log(`my IP address is ${myIP}`);
   
     fetchCoordsByIP(myIP, (err, data) => { 
       if (err) {
@@ -101,7 +96,6 @@ const nextISSTimesForMyLocation = function(callback) {
         return;
       }
       let coords = data;
-      // console.log(`my coordinates are ${JSON.stringify(coords)}`);
 
       fetchISSFlyOverTimes(coords, (err, data) => {
         if (err) {
@@ -109,15 +103,11 @@ const nextISSTimesForMyLocation = function(callback) {
           return;
         }
         risetimes = data;
-        // console.log(`the next 5 flyovers are ${JSON.stringify(risetimes)}`);
         
         // PRINT OUT FLY OVER TIMES
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',};
         for (let rise of risetimes) {
-          // console.log(rise);
           const dateTimeStr = new Date(rise.risetime * 1000).toLocaleDateString(undefined, options);
-          
-          // const result = (dateTimeStr.split(", ")[1]).split(":").join("/");
           console.log(`Next pass at ${dateTimeStr} for ${rise.duration} seconds!`);
         }
       }); 
@@ -128,8 +118,6 @@ const nextISSTimesForMyLocation = function(callback) {
 
 
 }
-
-
 
 
 module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };
